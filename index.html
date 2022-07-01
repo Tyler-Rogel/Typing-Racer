@@ -6,24 +6,11 @@
 <body>
     <div id="app">
         <h1>Typing Test</h1>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
+        {{ currentSentence }} <br>
+        <input v-model="userSentence" type="text" placeholder="start typing when you're ready" @keydown.once="startRace" @keydown.enter="calculateTotalTime"> <br>
+        <test-button :pressfunction="resetWithNewSentence" :getsentence="'new'"></test-button> <br>
+        <test-button :pressfunction="resetTest" :getsentence="'same'"></test-button> <br>
+        <span v-if="!racing">Total time: {{ time }}</span>  
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="app.js"></script>

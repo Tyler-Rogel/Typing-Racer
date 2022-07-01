@@ -3,20 +3,59 @@ const SENTENCES = [
     "It's been over a fence, I'm starting to think that tractor is never coming back.",
     "What do you believe to be the answer to my problems?",
 ]
+Vue.component('test-button', {
+    props: {
+        pressfunction: Function,
+        getsentence: String
+    },
+    template: `<button @click="pressfunction">Reset test with {{ getsentence }} Sentence</button>`,
+    data: function () {return {}},
+    methods: {},
+})
 var app = new Vue({
     el: "#app",
     data:{
+        currentSentence: '',
+        userSentence: '',
+        startTime: 0,
+        
+        time: 0,
+        racing: false,
     },
     methods:{
         startRace: function () {
+            if(!this.racing){
+            // let current = new Date();
+            // this.startTime = current.getSeconds + ":" + current.getMilliseconds();
+            this.startTime = Date.now();
+            this.racing = true;
+            }
         },
         getRandomSentence: function () {
+            let i = Math.floor(Math.random() * SENTENCES.length);
+            this.currentSentence = SENTENCES[i];
+            console.log(i, this.currentSentence);
+
         },
         calculateTotalTime: function () {
+            // let current = new Date();
+            // this.stopTime = current.getSeconds + ":" + current.getMilliseconds();
+            // this.time = this.stopTime - this.startTime;
+            this.time = (Date.now() - this.startTime)/1000;
+            this.racing = false;
         },
+
         resetTest: function () {
+            this.startTime = 0;
+            this.userSentence = '';
+            this.racing = false;
         },
         resetWithNewSentence: function () {
+            this.startTime = 0;
+            this.currentSentence = '';
+            this.userSentence = '';
+            this.getRandomSentence();
+            this.racing = false;
         }
     },
     computed: {
@@ -24,7 +63,7 @@ var app = new Vue({
         // use it like a variable (v-if="finishedTyping")
         finishedTyping: function () {
             // you probably wanna use your variable here in place of these awful ones
-            if (this.SENTENCE_TO_BE_TYPED == this.SENTENCE_USER_IS_TYPING) {
+            if (this.currentSentence == this.userSentence) {
                 this.calculateTotalTime();
                 return true;
             } else {
@@ -33,6 +72,7 @@ var app = new Vue({
         }
     },
     created: function () {
+        this.getRandomSentence();
     }
 });
 /*
