@@ -46,12 +46,12 @@ var app = new Vue({
         },
 
         resetTest: function () {
-            this.startTime = 0;
+            //this.startTime = 0;
             this.userSentence = '';
             this.racing = false;
         },
         resetWithNewSentence: function () {
-            this.startTime = 0;
+            //this.startTime = 0;
             this.currentSentence = '';
             this.userSentence = '';
             this.getRandomSentence();
